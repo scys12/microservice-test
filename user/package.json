@@ -1,0 +1,24 @@
+{
+  "name": "user",
+  "version": "1.0.0",
+  "description": "User service",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index",
+    "dev-start": "nodemon index",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongodb": "^3.6.3",
+    "mongoose": "^5.11.18"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
