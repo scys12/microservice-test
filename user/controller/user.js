@@ -1,6 +1,7 @@
 import asyncHandler from "express-async-handler"
 import { validationResult } from "express-validator"
 import BadRequest from "../errors/BadRequest.js"
+import NotFound from "../errors/NotFound.js"
 import User from '../models/user.js'
 
 const loginUser = asyncHandler(async (req, res) => {
@@ -49,4 +50,39 @@ const registerUser = asyncHandler(async (req, res) => {
   }
 })
 
-export { loginUser, registerUser }
+const updateUser = asyncHandler(async (req, res) => {
+  const error = validationResult(req)
+  if (!error.isEmpty()){
+    throw new BadRequest("Invalid Request Input",error.array())
+  }
+  const { name, email } = req.body
+  
+})
+
+const getAllUsers = asyncHandler(async (req, res) => {
+  const users = await User.find()
+  res.json(users)
+})
+
+const getUser =  asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id).select('-password')
+  console.log("object")
+  if (user) {
+    res.json(user)
+  }else{
+    throw new NotFound("User Not Found")
+  }
+})
+
+const deleteUser = asyncHandler(async (req, res) => {
+  
+})
+
+export { 
+  loginUser, 
+  registerUser, 
+  updateUser, 
+  getAllUsers, 
+  getUser, 
+  deleteUser 
+}
