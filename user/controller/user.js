@@ -35,6 +35,7 @@ const registerUser = asyncHandler(async (req, res) => {
     name:name,
     email:email,
     password:password,
+    role: 'user'
   })
   if (user) {
     res.json({
