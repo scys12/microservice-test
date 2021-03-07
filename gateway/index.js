@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser'
 import userApi  from './api/user/index.js'
 import tokenApi  from './api/user/index.js'
 import { errorHandler } from './api/middleware/index.js'
+
 dotenv.config()
 
 const app = express()

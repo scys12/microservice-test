@@ -1,3 +1,12 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: token-jwt-secret
+type: Opaque
+data:
+  jwt_secret: bWljcm9zZXJ2aWNlLXRlc3Q=
+  jwt_refresh_secret: bWljcm9zZXJ2aWNlLXRlc3QtcmVmcmVzaA==
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -23,6 +32,16 @@ spec:
               value: "http://userservice"
             - name: TOKEN_SERVICE_URL
               value: "http://tokenservice"
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: token-jwt-secret
+                  key: jwt_secret
+            - name: JWT_REFRESH_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: token-jwt-secret
+                  key: jwt_refresh_secret
           imagePullPolicy: Always
 ---
 apiVersion: v1

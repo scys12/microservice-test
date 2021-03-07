@@ -1,8 +1,12 @@
 import util from 'util'
 
+const userUrl = process.env.USER_SERVICE_URL
+const tokenUrl = process.env.TOKEN_SERVICE_URL
+
 export default  {
-  loginUrl: `${process.env.USER_SERVICE_URL}/login`,
-  registerUrl: `${process.env.USER_SERVICE_URL}/register`,
-  newTokenUrl: `${process.env.TOKEN_SERVICE_URL}/new-token`,
-  refreshTokenUrl: `${process.env.TOKEN_SERVICE_URL}/refresh-token`,
+  loginUrl: `${userUrl}/login`,
+  registerUrl: `${userUrl}/register`,
+  userUrl: `${userUrl}/`,
+  newTokenUrl: `${tokenUrl}/new-token`,
+  refreshTokenUrl: `${tokenUrl}/refresh-token`,
 }
