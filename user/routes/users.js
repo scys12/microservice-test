@@ -30,7 +30,7 @@ router.post(
     'password',
     'Please enter a password with 6 or more characters'
   ).isLength({ min: 6 }),
-  check('role', 'Please enter the right role').isLength({min:5, max:5}),
+  check('role', 'Please enter the right role').isIn(['admin', 'user']),
   registerUser
 )
 

@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken'
 
 const errorHandler = function(err, req, res, next) {
-  const ret = err.response.data;
+  const ret = err.response.data || { message: "Internal Server Error"};
   res.
     status(err.response.status || 500).
     send(ret);
@@ -13,7 +13,8 @@ const successResponse = function(res, statusCode, body) {
 
 const auth = function(req, res, next) {
   const token = req.cookies.token;
-  if (token) {
+  console.log(req.cookies)
+  if (!token) {
     return res.status(401).json({ msg: 'No token, authorization denied' });
   }
   
@@ -22,7 +23,7 @@ const auth = function(req, res, next) {
       if (error) {
         return res.status(401).json({ msg: 'Token is not valid' });
       } else {
-        req.user = decoded.user;
+        req.user = decoded;
         next();
       }
     });

@@ -52,6 +52,10 @@ const updateUser = asyncHandler(async (req, res) => {
     throw new BadRequest("Invalid Request Input",error.array())
   }
   const { name, email} = req.body
+  const userExists = await User.findOne({ email })
+  if (userExists) {
+    throw new BadRequest("Email already exists")
+  }
   const user = await User.findById(req.params.id).select('-password');
   if (!user) {
     throw new NotFound("User not found")

@@ -2,7 +2,7 @@ import express from 'express'
 import asyncHandler from 'express-async-handler'
 import endpoints from '../endpoints.js'
 import axios from 'axios'
-import { auth, successResponse } from '../middleware/index.js'
+import { auth, successResponse } from '../../middleware/index.js'
 
 const userApi = express.Router()
 userApi.post('/register', auth, asyncHandler(async (req, res) => {  
@@ -15,7 +15,7 @@ userApi.post('/login', asyncHandler(async (req, res) => {
   const user = userLogin.data;
   const token = await axios.post(endpoints.newTokenUrl, user)
   res.cookie('token', token.data.access_token, {
-    maxAge: 1800,
+    maxAge: 1800000 /* 30 minutes*/,
     httpOnly: true
   })
   successResponse(res, token.status, token.data)

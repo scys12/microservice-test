@@ -4,7 +4,7 @@ import dotenv from 'dotenv'
 import cookieParser from 'cookie-parser'
 import userApi  from './api/user/index.js'
 import tokenApi  from './api/user/index.js'
-import { errorHandler } from './api/middleware/index.js'
+import { errorHandler } from './middleware/index.js'
 
 dotenv.config()
 
@@ -16,6 +16,10 @@ app.use(cookieParser());
 
 app.use('/user', userApi)
 app.use('/token', tokenApi)
+
+app.all('*', async (req , res) => { 
+  return res.status(404).json({ message: 'Request not found' });
+});
 
 app.use(errorHandler)
 
