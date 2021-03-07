@@ -13,6 +13,8 @@ userApi.post('/register', asyncHandler(async (req, res) => {
 userApi.post('/login', asyncHandler(async (req, res) => {
   const userLogin = await axios.post(endpoints.loginUrl, req.body)
   const user = userLogin.data;
+  const token = await axios.post(endpoints.newTokenUrl, user)
+  successResponse(res, token.status, token.data)
 }))
 
 export default userApi

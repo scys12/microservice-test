@@ -21,6 +21,8 @@ spec:
               value: "8080"
             - name: USER_SERVICE_URL
               value: "http://userservice"
+            - name: TOKEN_SERVICE_URL
+              value: "http://tokenservice"
           imagePullPolicy: Always
 ---
 apiVersion: v1
