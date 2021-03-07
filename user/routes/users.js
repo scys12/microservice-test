@@ -8,6 +8,7 @@ import {
   getUser, 
   getAllUsers 
 } from '../controller/user.js'
+import { checkObjectId } from '../middleware/index.js'
 
 const router = express.Router()
 
@@ -29,6 +30,7 @@ router.post(
     'password',
     'Please enter a password with 6 or more characters'
   ).isLength({ min: 6 }),
+  check('role', 'Please enter the right role').isLength({min:5, max:5}),
   registerUser
 )
 
@@ -38,14 +40,19 @@ router.get(
 )
 
 router.route('/:id')
-  .get(getUser)
+  .get(
+    checkObjectId('id'),
+    getUser
+  )
   .put(
+    checkObjectId('id'),
     check('name', 'Name is required').isLength({ min: 6}),
     check('email', 'Please include a valid email').isEmail(),    
     updateUser
   )
-  .delete(deleteUser)
-
-router.get('/ping', async (req, res) => res.send('pong'))
+  .delete(
+    checkObjectId('id'),
+    deleteUser
+  )
 
 export default router

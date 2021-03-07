@@ -2,7 +2,7 @@ import express from 'express'
 import dotenv from 'dotenv'
 import connectToMongo from './config/db.js'
 import userRoutes from './routes/users.js'
-import {errorHandler} from './middleware/errorMiddleware.js'
+import {errorHandler} from './middleware/index.js'
 
 dotenv.config()
 
