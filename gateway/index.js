@@ -1,16 +1,18 @@
 import express from 'express'
-import bodyParser from 'body-parser'
+import {json} from 'body-parser'
 import dotenv from 'dotenv'
 import cookieParser from 'cookie-parser'
 import userApi  from './api/user/index.js'
+import tokenApi  from './api/user/index.js'
 import { errorHandler } from './api/middleware/index.js'
 dotenv.config()
 
 const app = express()
-app.use(bodyParser.json())
+app.use(json())
 app.use(cookieParser());
 
-app.use(userApi)
+app.use('/user', userApi)
+app.use('/token', tokenApi)
 
 app.use(errorHandler)
 

@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tokenservice
+spec:
+  selector:
+    matchLabels:
+      app: tokenservice
+  template:
+    metadata:
+      labels:
+        app: tokenservice
+    spec:
+      containers:
+        - name: tokenservice
+          image: scys12/microservice-test-token:1.0
+          ports:
+            - containerPort: 80
+          env:
+            - name: PORT
+              value: "80"
+            - name: MONGO_URI
+              value: mongodb://mongo:27017/sejuta-cita
+          imagePullPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tokenservice
+spec:
+  type: ClusterIP
+  selector:
+    app: tokenservice
+  ports:
+    - port: 80
+      targetPort: 80
