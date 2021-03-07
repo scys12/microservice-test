@@ -3,6 +3,7 @@ import bodyParser from 'body-parser'
 import dotenv from 'dotenv'
 import cookieParser from 'cookie-parser'
 import userApi  from './api/user/index.js'
+import { errorHandler } from './api/middleware/index.js'
 dotenv.config()
 
 const app = express()
@@ -10,6 +11,8 @@ app.use(bodyParser.json())
 app.use(cookieParser());
 
 app.use(userApi)
+
+app.use(errorHandler)
 
 const PORT = process.env.PORT || 8080
 const ENV = process.env.ENV

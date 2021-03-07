@@ -23,7 +23,6 @@ const loginUser = asyncHandler(async (req, res) => {
 })
 
 const registerUser = asyncHandler(async (req, res) => {
-  console.log("abc")
   const error = validationResult(req)
   if (!error.isEmpty()){
     throw new BadRequest("Invalid Request Input",error.array())
