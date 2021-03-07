@@ -1,11 +1,12 @@
 import express from 'express'
 import asyncHandler from 'express-async-handler'
-import endpoints from '../endpoints'
-import moduleName from 'requ'
+import endpoints from '../endpoints.js'
 import axios from 'axios'
 
-const app = express()
-app.post('/register', asyncHandler(async (req, res) => {  
+const userApi = express()
+userApi.post('/register', asyncHandler(async (req, res) => {  
+  console.log(endpoints.registerUrl)
   const userRegister = await axios.post(endpoints.registerUrl, req.body)
-  console.log(userRegister)
 }))
+
+export default userApi

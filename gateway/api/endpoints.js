@@ -1,6 +1,6 @@
 import util from 'util'
 
 export default  {
-  loginUrl: 'http://user/login',
-  registerUrl: 'http://user/register',
+  loginUrl: `${process.env.USER_SERVICE_URL}/login`,
+  registerUrl: `${process.env.USER_SERVICE_URL}/register`,
 }
