@@ -3,7 +3,7 @@ import bodyParser from 'body-parser'
 import dotenv from 'dotenv'
 import cookieParser from 'cookie-parser'
 import userApi  from './api/user/index.js'
-import tokenApi  from './api/user/index.js'
+import tokenApi  from './api/token/index.js'
 import { errorHandler } from './middleware/index.js'
 
 dotenv.config()
