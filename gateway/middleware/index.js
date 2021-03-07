@@ -11,9 +11,16 @@ const successResponse = function(res, statusCode, body) {
   res.status(statusCode).send(body)
 }
 
+const authRefresh = function (req, res, next) {
+  const refreshToken = req.cookies.reftoken
+  if (!token) {
+    return res.status(401).json({ message: 'No token, authorization denied' });
+  }
+  next()
+}
+
 const auth = function(req, res, next) {
-  const token = req.cookies.token;
-  console.log(req.cookies)
+  const token = req.cookies.token
   if (!token) {
     return res.status(401).json({ message: 'No token, authorization denied' });
   }
@@ -45,4 +52,5 @@ export {
   successResponse,
   auth,
   isAdmin,
+  authRefresh,
 }

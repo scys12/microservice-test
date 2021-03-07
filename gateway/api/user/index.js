@@ -15,7 +15,11 @@ userApi.post('/login', asyncHandler(async (req, res) => {
   const user = userLogin.data;
   const token = await axios.post(endpoints.newTokenUrl, user)
   res.cookie('token', token.data.access_token, {
-    maxAge: 1800000 /* 30 minutes*/,
+    maxAge: 300000 /* 5 minutes*/,
+    httpOnly: true
+  })
+  res.cookie('reftoken', token.data.refresh_token, {
+    maxAge: 604800000 /* 7 days*/,
     httpOnly: true
   })
   successResponse(res, token.status, token.data)
