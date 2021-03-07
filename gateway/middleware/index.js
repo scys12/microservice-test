@@ -15,13 +15,13 @@ const auth = function(req, res, next) {
   const token = req.cookies.token;
   console.log(req.cookies)
   if (!token) {
-    return res.status(401).json({ msg: 'No token, authorization denied' });
+    return res.status(401).json({ message: 'No token, authorization denied' });
   }
   
   try {
     jwt.verify(token, process.env.JWT_SECRET, (error, decoded) => {
       if (error) {
-        return res.status(401).json({ msg: 'Token is not valid' });
+        return res.status(401).json({ message: 'Token is not valid' });
       } else {
         req.user = decoded;
         next();
@@ -29,12 +29,20 @@ const auth = function(req, res, next) {
     });
   } catch (err) {
     console.error('something wrong with auth middleware');
-    res.status(500).json({ msg: 'Server Error' });
+    res.status(500).json({ message: 'Server Error' });
   }
 };
+
+const isAdmin = function (req, res, next) {
+  if(req.user.role != "admin"){
+    return res.status(401).json({ message: 'Not authorized request' });
+  }
+  return next();
+}
 
 export {
   errorHandler,
   successResponse,
   auth,
+  isAdmin,
 }

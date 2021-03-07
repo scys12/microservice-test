@@ -2,10 +2,10 @@ import express from 'express'
 import asyncHandler from 'express-async-handler'
 import endpoints from '../endpoints.js'
 import axios from 'axios'
-import { auth, successResponse } from '../../middleware/index.js'
+import { auth, isAdmin, successResponse } from '../../middleware/index.js'
 
 const userApi = express.Router()
-userApi.post('/register', auth, asyncHandler(async (req, res) => {  
+userApi.post('/register', auth, isAdmin, asyncHandler(async (req, res) => {  
   const userRegister = await axios.post(endpoints.registerUrl, req.body)
   successResponse(res, userRegister.status, userRegister.data)  
 }))
@@ -21,32 +21,37 @@ userApi.post('/login', asyncHandler(async (req, res) => {
   successResponse(res, token.status, token.data)
 }))
 
-userApi.get('/:id', auth, asyncHandler(async (req, res) => {
+userApi.get('/me', auth, asyncHandler( async (req, res) => {
+  const paramsId = req.user._id
+  const user = await axios.get(`${endpoints.userUrl}${paramsId}`)
+  successResponse(res, user.status, user.data)
+}))
+
+userApi.post('/logout', auth, asyncHandler( async (req, res) => {
+  res.clearCookie('token');
+  successResponse(res, 200, {message: 'Successfully logout'})
+}))
+
+userApi.get('/:id', auth, isAdmin, asyncHandler(async (req, res) => {
   const paramsId = req.params.id
   const user = await axios.get(`${endpoints.userUrl}${paramsId}`)
   successResponse(res, user.status, user.data)
 }))
 
-userApi.get('/', auth, asyncHandler(async (req, res) => {
+userApi.get('/', auth, isAdmin, asyncHandler(async (req, res) => {
   const user = await axios.get(`${endpoints.userUrl}`)
   successResponse(res, user.status, user.data)
 }))
 
-userApi.put('/:id', auth, asyncHandler(async (req, res) => {
+userApi.put('/:id', auth, isAdmin, asyncHandler(async (req, res) => {
   const paramsId = req.params.id
   const user = await axios.put(`${endpoints.userUrl}${paramsId}`, req.body)
   successResponse(res, user.status, user.data)
 }))
 
-userApi.delete('/:id', auth, asyncHandler(async (req, res) => {
+userApi.delete('/:id', auth, isAdmin, asyncHandler(async (req, res) => {
   const paramsId = req.params.id
   const user = await axios.delete(`${endpoints.userUrl}${paramsId}`)
-  successResponse(res, user.status, user.data)
-}))
-
-userApi.get('/me', auth, asyncHandler( async (req, res) => {
-  const paramsId = req.user._id
-  const user = await axios.get(`${endpoints.userUrl}${paramsId}`)
   successResponse(res, user.status, user.data)
 }))
 
