@@ -28,7 +28,6 @@ routes.post('/refresh-token', asyncHandler(async (req, res) => {
   const {token} = req.body
   try {
     jwt.verify(token, process.env.JWT_REFRESH_SECRET, (error, decoded) => {
-      console.log(decoded)
       if (error) {
         return res.status(401).json({ message: 'Token is not valid' });
       } else {

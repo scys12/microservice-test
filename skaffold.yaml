@@ -16,8 +16,8 @@ build:
       context: user
       docker:
         dockerfile: Dockerfile
-  local:
-    push: true
+  tagPolicy:
+    gitCommit: {}
 deploy:
   kubectl:
     manifests:
@@ -27,3 +27,9 @@ deploy:
     flags:
       global:
         - --namespace=sejuta-cita
+portForward:
+  - resourceType: service
+    resourceName: gateway-external
+    namespace: sejuta-cita
+    port: 80
+    localPort: 8080

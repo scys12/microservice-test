@@ -56,7 +56,12 @@ userApi.put('/:id', auth, isAdmin, asyncHandler(async (req, res) => {
 
 userApi.delete('/:id', auth, isAdmin, asyncHandler(async (req, res) => {
   const paramsId = req.params.id
+  const currentId = req.user._id
   const user = await axios.delete(`${endpoints.userUrl}${paramsId}`)
+  if (paramsId === currentId) {
+    res.clearCookie('token')
+    res.clearCookie('reftoken')
+  }
   successResponse(res, user.status, user.data)
 }))
 

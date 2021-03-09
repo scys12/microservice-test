@@ -56,7 +56,7 @@ const updateUser = asyncHandler(async (req, res) => {
   if (userExists) {
     throw new BadRequest("Email already exists")
   }
-  const user = await User.findById(req.params.id).select('-password');
+  const user = await User.findById(req.params.id).select('-password -__v');
   if (!user) {
     throw new NotFound("User not found")
   }
