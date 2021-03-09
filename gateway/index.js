@@ -14,8 +14,11 @@ const { json } = bodyParser
 app.use(json())
 app.use(cookieParser());
 
-app.use('/user', userApi)
-app.use('/token', tokenApi)
+const routes = express.Router()
+routes.use('/user', userApi)
+routes.use('/token', tokenApi)
+
+app.use('/api/v1', routes)
 
 app.all('*', async (req , res) => { 
   return res.status(404).json({ message: 'Request not found' });

@@ -1,0 +1,29 @@
+apiVersion: skaffold/v2beta12
+kind: Config
+metadata:
+  name: microservice-test
+build:
+  artifacts:
+    - image: scys12/microservice-test-gateway
+      context: gateway
+      docker:
+        dockerfile: Dockerfile
+    - image: scys12/microservice-test-token
+      context: token
+      docker:
+        dockerfile: Dockerfile
+    - image: scys12/microservice-test-user
+      context: user
+      docker:
+        dockerfile: Dockerfile
+  local:
+    push: true
+deploy:
+  kubectl:
+    manifests:
+      - k8s/manifests-gateway.yaml
+      - k8s/manifests-token.yaml
+      - k8s/manifests-user.yaml
+    flags:
+      global:
+        - --namespace=sejuta-cita

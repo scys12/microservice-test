@@ -2,7 +2,7 @@ import express from 'express'
 import asyncHandler from 'express-async-handler'
 import endpoints from '../endpoints.js'
 import axios from 'axios'
-import { auth, isAdmin, successResponse } from '../../middleware/index.js'
+import { auth, isAdmin, notAuth, successResponse } from '../../middleware/index.js'
 
 const userApi = express.Router()
 userApi.post('/register', auth, isAdmin, asyncHandler(async (req, res) => {  
@@ -10,7 +10,7 @@ userApi.post('/register', auth, isAdmin, asyncHandler(async (req, res) => {
   successResponse(res, userRegister.status, userRegister.data)  
 }))
 
-userApi.post('/login', asyncHandler(async (req, res) => {
+userApi.post('/login', notAuth, asyncHandler(async (req, res) => {
   const userLogin = await axios.post(endpoints.loginUrl, req.body)
   const user = userLogin.data;
   const token = await axios.post(endpoints.newTokenUrl, user)
@@ -33,6 +33,7 @@ userApi.get('/me', auth, asyncHandler( async (req, res) => {
 
 userApi.post('/logout', auth, asyncHandler( async (req, res) => {
   res.clearCookie('token');
+  res.clearCookie('reftoken');
   successResponse(res, 200, {message: 'Successfully logout'})
 }))
 

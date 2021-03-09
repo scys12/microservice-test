@@ -31,7 +31,6 @@ spec:
                 secretKeyRef:
                   name: token-jwt-secret
                   key: jwt_refresh_secret
-          imagePullPolicy: Always
 ---
 apiVersion: v1
 kind: Service

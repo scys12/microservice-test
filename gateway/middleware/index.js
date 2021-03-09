@@ -12,9 +12,21 @@ const successResponse = function(res, statusCode, body) {
 }
 
 const authRefresh = function (req, res, next) {
-  const refreshToken = req.cookies.reftoken
-  if (!token) {
+  const reftoken = req.cookies.reftoken
+  const token = req.cookies.token
+  if (!reftoken) {
     return res.status(401).json({ message: 'No token, authorization denied' });
+  }
+  if (token) {
+    return res.status(400).json({ message: 'User has been authenticated' });    
+  }
+  next()
+}
+
+const notAuth = function (req, res, next) {
+  const token = req.cookies.token
+  if (token) {
+    return res.status(400).json({ message: 'User has been authenticated' });
   }
   next()
 }
@@ -52,5 +64,6 @@ export {
   successResponse,
   auth,
   isAdmin,
+  notAuth,
   authRefresh,
 }

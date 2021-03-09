@@ -5,12 +5,12 @@ import axios from 'axios'
 import { authRefresh, successResponse } from '../../middleware/index.js'
 
 const tokenApi = express.Router()
-userApi.post('/refresh-token', authRefresh, asyncHandler(async (req, res) => {
+tokenApi.post('/refresh-token', authRefresh, asyncHandler(async (req, res) => {
   const token = {
     token: req.cookies.reftoken
   }
   const refreshToken = await axios.post(endpoints.refreshTokenUrl, token)
-  res.cookie('token', token.data.access_token, {
+  res.cookie('token', refreshToken.data.access_token, {
     maxAge: 300000 /* 5 minutes*/,
     httpOnly: true
   })
