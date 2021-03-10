@@ -47,7 +47,6 @@ router.route('/:id')
   .put(
     checkObjectId('id'),
     check('name', 'Name is required').isLength({ min: 6}),
-    check('email', 'Please include a valid email').isEmail(),    
     updateUser
   )
   .delete(

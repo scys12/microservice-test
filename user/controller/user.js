@@ -51,21 +51,22 @@ const updateUser = asyncHandler(async (req, res) => {
   if (!error.isEmpty()){
     throw new BadRequest("Invalid Request Input",error.array())
   }
-  const { name, email} = req.body
-  const userExists = await User.findOne({ email })
-  if (userExists) {
-    throw new BadRequest("Email already exists")
+  const email = req.body.email, name = req.body.name;
+  const data = {name: name}
+  if (email) {
+    data.email = email
+    const userExists = await User.findOne({ email })
+    if (userExists) {
+      throw new BadRequest("Email already exists")
+    }
   }
   const user = await User.findById(req.params.id).select('-password -__v');
   if (!user) {
     throw new NotFound("User not found")
   }
-  user.set({
-    name,
-    email,
-  })
+  user.set(data)
   await user.save()
-  res.json(user)
+  res.status(200).json(user)
 })
 
 const getAllUsers = asyncHandler(async (req, res) => {

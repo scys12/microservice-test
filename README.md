@@ -2,7 +2,7 @@
 
 API Documentation : https://app.swaggerhub.com/apis-docs/scys12/MicroserviceAPI/1.0.0#/
 
-URL Gateway: http://a8ef91cbe01a94e35b9819ecd7814b26-1267962049.us-east-1.elb.amazonaws.com
+URL Gateway: http://a8af3cb54b0cc440cb01ff3e13efe72e-53963905.us-east-1.elb.amazonaws.com
 
 ## Admin Credentials
 
@@ -57,7 +57,7 @@ URL Gateway: http://a8ef91cbe01a94e35b9819ecd7814b26-1267962049.us-east-1.elb.am
 
 6. Run docker and kubectl. Then start minikube with `minikube start`
 
-7. Run `skaffold dev`. Skaffold will handle the rest.
+7. Run `skaffold dev --port-forward`. Skaffold will handle the rest.
 
 8. Check whether resource has been up & running with `kubectl get all -n sejuta-cita`
 

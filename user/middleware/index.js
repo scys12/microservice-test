@@ -3,7 +3,7 @@ import AppError from "../errors/AppError.js"
 import BadRequest from '../errors/BadRequest.js'
 
 const errorHandler = (err, req, res, next) => {
-  const statusCode = res.statusCode === 200 ? err.status : res.statusCode
+  const statusCode = err.status || 500
   res.status(statusCode)
   if (err instanceof AppError) {
     res.json(err.response())
